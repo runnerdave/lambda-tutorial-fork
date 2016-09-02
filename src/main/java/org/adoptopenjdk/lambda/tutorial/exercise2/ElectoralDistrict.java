@@ -54,7 +54,7 @@ public enum ElectoralDistrict {
      * @return filtered set of registered voters in a district
      */
     public static Set<RegisteredVoter> votersIn(ElectoralDistrict district, Collection<RegisteredVoter> voters) {
-        // [your code here]
+    	Set<RegisteredVoter> votersInDistrict = 
 
         return Collections.emptySet();
     }
