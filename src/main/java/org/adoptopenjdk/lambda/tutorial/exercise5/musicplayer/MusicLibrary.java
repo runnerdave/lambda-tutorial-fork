@@ -23,6 +23,7 @@ package org.adoptopenjdk.lambda.tutorial.exercise5.musicplayer;
  */
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -55,6 +56,13 @@ public interface MusicLibrary {
         float score = (timesPlayed(song) / totalPlayCount) * 100.0f;
         return new Rating(Math.round(score));
     }
+    
+     
 
     int timesPlayed(Song song);
+
+    default List<Song> sortedByArtist(){
+		return SongByArtistSorter.sort(allSongs());
+    	
+    }
 }

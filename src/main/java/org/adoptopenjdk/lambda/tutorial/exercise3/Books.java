@@ -27,7 +27,7 @@ public class Books {
      * @return list of author full names
      */
     public static List<String> namesOfAuthorsOf(List<Book> books) {
-    	return books.stream().map(x->{return x.getAuthor().getFirstName() + " " + x.getAuthor().getLastName();}).collect(Collectors.toList());
+    	return books.stream().map(x->x.getAuthor().fullName()).collect(Collectors.toList());
     }
 
     /**
