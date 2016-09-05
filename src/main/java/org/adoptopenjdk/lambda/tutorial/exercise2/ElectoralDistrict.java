@@ -24,7 +24,10 @@ package org.adoptopenjdk.lambda.tutorial.exercise2;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Some (inaccurate) London electrical districts
@@ -35,44 +38,49 @@ import java.util.Set;
  */
 public enum ElectoralDistrict {
 
-    CROYDON("CR"),
-    BARKING("BA"),
-    HACKNEY("HA"),
-    EDMONTON("ED");
+	CROYDON("CR"), BARKING("BA"), HACKNEY("HA"), EDMONTON("ED");
 
-    private final String prefix;
+	private final String prefix;
 
-    ElectoralDistrict(String prefix) {
-        this.prefix = prefix;
-    }
+	ElectoralDistrict(String prefix) {
+		this.prefix = prefix;
+	}
 
-    /**
-     * Complete this method to pass Exercise_2_Test#setOfVotersInDistrict()
-     * 
-     * @param district - District to vote in
-     * @param voters - voters to filter
-     * @return filtered set of registered voters in a district
-     */
-    public static Set<RegisteredVoter> votersIn(ElectoralDistrict district, Collection<RegisteredVoter> voters) {
-    	Set<RegisteredVoter> votersInDistrict = 
+	/**
+	 * Complete this method to pass Exercise_2_Test#setOfVotersInDistrict()
+	 * 
+	 * @param district
+	 *            - District to vote in
+	 * @param voters
+	 *            - voters to filter
+	 * @return filtered set of registered voters in a district
+	 */
+	public static Set<RegisteredVoter> votersIn(ElectoralDistrict district, Collection<RegisteredVoter> voters) {
+		//solution without the unmodifiableSet conversion for the setVotersInDistrict solution only
+		//Set<RegisteredVoter> votersInDistrict = voters.stream()
+		//		.filter(x -> x.getElectorId().substring(0, 2).equals(district.prefix)).collect(Collectors.toSet());
 
-        return Collections.emptySet();
-    }
+		Set<RegisteredVoter> votersInDistrict = voters.stream()
+				.filter(x -> x.getElectorId().substring(0, 2).equals(district.prefix))
+				.collect(Collectors.collectingAndThen(Collectors.toSet(),Collections::unmodifiableSet));
 
-    /**
-     * Complete this method to pass Exercise_2_Test#removeAllSpoiledBallots()
-     * 
-     * @param ballots - ballots to filter
-     * @return filtered set of unspoiled ballots
-     */
-    public static Set<Ballot> unspoiledBallots(Set<Ballot> ballots) {
-        // [your code here]
+		return votersInDistrict;
+	}
 
-        return Collections.emptySet();
-    }
 
-    public String getPrefix() {
-        return prefix;
-    }
+	/**
+	 * Complete this method to pass Exercise_2_Test#removeAllSpoiledBallots()
+	 * 
+	 * @param ballots
+	 *            - ballots to filter
+	 * @return filtered set of unspoiled ballots
+	 */
+	public static Set<Ballot> unspoiledBallots(Set<Ballot> ballots) {
+		Set<Ballot> unspoiledBallots = ballots.stream().filter(x->!x.isSpoiled()).collect(Collectors.toSet());
+		return unspoiledBallots;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
 }
-
