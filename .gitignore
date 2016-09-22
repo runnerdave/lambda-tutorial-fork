@@ -5,6 +5,7 @@
 *iws
 *eml
 .idea/
+/out
 
 # Eclipse
 .classpath
