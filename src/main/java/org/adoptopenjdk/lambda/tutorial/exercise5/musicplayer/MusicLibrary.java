@@ -53,7 +53,8 @@ public interface MusicLibrary {
      */
     default Rating ratingOf(Song song) {
         int totalPlayCount = allSongs().stream().mapToInt(this::timesPlayed).sum();
-        float score = (timesPlayed(song) / totalPlayCount) * 100.0f;
+//        float score = (timesPlayed(song) / totalPlayCount) * 100.0f;
+        float score = (timesPlayed(song) * 100.0f / totalPlayCount);
         return new Rating(Math.round(score));
     }
     

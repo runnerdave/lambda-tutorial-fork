@@ -227,7 +227,7 @@ public class Exercise_5_Test {
     @Test
     public void overridesDefaultMethodInClassToProvideCustomSongRatingAlgorithm() {
         MusicLibrary library = new CloudScrobblingMusicLibrary();
-
+        library.ratingOf(new Song("Candy", "Paulo Nutini"));
         assertThat(library.ratingOf(new Song("Candy", "Paulo Nutini")), is(new Rating(78)));
         assertThat(CloudScrobblingMusicLibrary.class, HasConcreteMethod.called("ratingOf"));
     }
